@@ -1,7 +1,34 @@
-# First, install playwright package
+# First install required system dependencies - fixing the apt-get command with proper line continuation
+!apt-get update && apt-get install -y libx11-xcb1 \
+    libgtk-3-0 \
+    libasound2 \
+    xvfb \
+    libgbm1 \
+    libxss1 \
+    libxtst6 \
+    ca-certificates \
+    fonts-liberation \
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libdbus-1-3 \
+    libatspi2.0-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libasound2
+
+# Then install playwright and its dependencies
 !pip install playwright
-# Install playwright browsers
 !playwright install
+!playwright install-deps
 
 # Now the original code should work
 import re
@@ -13,6 +40,7 @@ import nest_asyncio  # Add this import
 from pathlib import Path
 from playwright.async_api import Playwright, async_playwright, expect, TimeoutError
 
+# Rest of the code remains the same...
 # Apply nest_asyncio to allow nested event loops
 nest_asyncio.apply()
 
@@ -34,6 +62,7 @@ async def run(playwright: Playwright) -> None:
     browser = await playwright.firefox.launch(headless=True)
     context = await browser.new_context()
     
+    # Rest of your original code remains exactly the same...
     # Define cookie file path
     cookie_file = Path("deepnote_cookies.json")
     
